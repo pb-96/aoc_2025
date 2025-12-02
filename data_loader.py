@@ -4,7 +4,7 @@ from typing import List
 
 @dataclass
 class DayType:
-    day_name: str = "day0"
+    day_name: str
 
     def get_name(self):
         return self.day_name
