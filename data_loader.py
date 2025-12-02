@@ -20,8 +20,7 @@ class DayType:
         raise NotImplementedError("Not Implemented")
 
 
-def find_data_file(location: Path) -> List[str] | None:
-    day_name = location.stem
+def find_data_file(location: Path, day_name: str) -> List[str] | None:
     all_files = [
         f for f in location.iterdir() if f.name.endswith(".txt") and f.stem == day_name
     ]

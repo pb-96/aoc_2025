@@ -11,8 +11,8 @@ ALL_ENTRIES: List[DayType] = [DayOne, DayTwo]
 if __name__ == "__main__":
     for entry in ALL_ENTRIES:
         instance: DayType = entry()
-        day_name = ROOT / instance.get_name()
-        data = find_data_file(day_name)
+        location = ROOT / instance.get_name()
+        data = find_data_file(location, instance.get_name())
         part_one, part_two = instance.both_parts(data)
 
         print("*" * 100)
