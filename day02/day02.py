@@ -2,6 +2,7 @@ from typing import List, Tuple, Generator
 import math
 from data_loader import DayType
 
+
 class DayTwo(DayType):
     def __init__(self):
         self.day_name = "day02"
@@ -13,39 +14,37 @@ class DayTwo(DayType):
                 to_parse = tuple(int(i) for i in row[idx].split("-"))
                 yield to_parse
 
-
     def number_is_contained(self, num: int) -> bool:
         num_digits = int(math.log10(num)) + 1
         half = num_digits // 2
-        divisor = 10 ** half
+        divisor = 10**half
         left = num // divisor
         right = num % divisor
         return left == right
 
-
     def part_one(self, data: List[Tuple[int, int]]):
         total_count = 0
-        
+
         for t in self.parse_input(data):
             start, end = t
             # given_range = end - start
             range_object = range(start, end + 1)
-            
+
             for given_num in range_object:
                 if self.number_is_contained(given_num):
                     total_count += given_num
-        
+
         return total_count
 
     def detect_chunks(self, chunk_amount: int, given_str: str) -> bool:
         if len(given_str) % chunk_amount != 0:
             return False
-        
+
         left = given_str[:chunk_amount]
         for idx in range(chunk_amount, len(given_str), chunk_amount):
-            if given_str[idx:idx + chunk_amount] != left:
+            if given_str[idx : idx + chunk_amount] != left:
                 return False
-        
+
         return True
 
     def count_window(self, num: int) -> int:
@@ -65,14 +64,14 @@ class DayTwo(DayType):
 
     def part_two(self, data: List[str]) -> int:
         total_count = 0
-        
+
         for t in self.parse_input(data):
             start, end = t
             # given_range = end - start
             range_object = range(start, end + 1)
             for num in range_object:
                 total_count += self.count_window(num)
-        
+
         return total_count
 
     def both_parts(self, raw_data: List[str]) -> Tuple[int, int]:

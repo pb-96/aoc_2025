@@ -11,17 +11,15 @@ class Direction(Enum):
     L: str = "L"
     R: str = "R"
 
-OPERATOR_MAP = {
-    Direction.L: sub,
-    Direction.R: add
-}
+
+OPERATOR_MAP = {Direction.L: sub, Direction.R: add}
 VALUE_DIR = {
     Direction.L: -1,
     Direction.R: 1,
 }
 
-class DayOne(DayType):
 
+class DayOne(DayType):
     def __init__(self):
         self.day_name = "day01"
 
@@ -29,33 +27,33 @@ class DayOne(DayType):
         return row if row <= UPPER_LIM else row % UPPER_LIM
 
     def parse_row(self, row: str):
-        return Direction(row[0]), int(row[1: ])
+        return Direction(row[0]), int(row[1:])
 
-    def part_one(self, data: List[str], start_point = 50):
-        counter = 0 
+    def part_one(self, data: List[str], start_point=50):
+        counter = 0
         for row in data:
             direction, rotate = self.parse_row(row)
             rotate = self.normalize_row(rotate)
-            opp = OPERATOR_MAP.get(direction)        
+            opp = OPERATOR_MAP.get(direction)
             temp = opp(start_point, rotate)
 
             if temp < LOWER_LIM:
-                temp = (UPPER_LIM - abs(temp))
+                temp = UPPER_LIM - abs(temp)
             elif temp == LOWER_LIM:
                 counter += 1
                 temp = UPPER_LIM - temp
-            elif temp >= UPPER_LIM :
+            elif temp >= UPPER_LIM:
                 temp = temp - UPPER_LIM
-            
+
             if temp == 0:
                 counter += 1
 
             start_point = temp
 
         return counter
-        
-    def part_two(self, data, start_point = 50):
-        counter = 0 
+
+    def part_two(self, data, start_point=50):
+        counter = 0
         for row in data:
             direction, r = self.parse_row(row)
             skips, rotate = divmod(r, 100)
@@ -71,9 +69,4 @@ class DayOne(DayType):
         return counter
 
     def both_parts(self, data: List[str]) -> Tuple[int, int]:
-        return  self.part_one(data), self.part_two(data)
-
-
-
-
-    
+        return self.part_one(data), self.part_two(data)

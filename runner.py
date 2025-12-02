@@ -6,10 +6,7 @@ from pathlib import Path
 
 ROOT = Path(".")
 
-ALL_ENTRIES: List[DayType] = [
-    DayOne,
-    DayTwo
-]
+ALL_ENTRIES: List[DayType] = [DayOne, DayTwo]
 
 if __name__ == "__main__":
     for entry in ALL_ENTRIES:
@@ -23,4 +20,3 @@ if __name__ == "__main__":
         print(f"Part One Answer => {part_two}")
         print(f"Part Two Answer => {part_two}")
         print("*" * 100)
-
