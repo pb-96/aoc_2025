@@ -2,6 +2,7 @@ from typing import List, Tuple
 from enum import Enum
 from data_loader import DayType
 from operator import add, sub
+from dataclasses import dataclass
 
 UPPER_LIM = 100
 LOWER_LIM = 0
@@ -18,10 +19,9 @@ VALUE_DIR = {
     Direction.R: 1,
 }
 
-
+@dataclass
 class DayOne(DayType):
-    def __init__(self):
-        self.day_name = "day01"
+    day_name: str = "day01"
 
     def normalize_row(self, row: int):
         return row if row <= UPPER_LIM else row % UPPER_LIM

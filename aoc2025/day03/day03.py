@@ -3,8 +3,7 @@ from typing import Tuple, List
 
 
 class DayThree(DayType):
-    def __init__(self):
-        self.day_name = "day03"
+    day_name: str = "day03"
 
     def windows_gen(self, row: str):
         for i in range(0, len(row) - 1):

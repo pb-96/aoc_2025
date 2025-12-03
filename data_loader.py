@@ -1,13 +1,19 @@
 from pathlib import Path
-from dataclasses import dataclass
-from typing import List, Tuple, Set, Callable
+from dataclasses import dataclass, field
+from typing import List, Tuple, Set, Callable, ClassVar
 from functools import partial
-from collections import deque
 
 
 @dataclass
 class DayType:
     day_name: str
+    instances: List["DayType"] = field(default_factory=list)
+    instances: ClassVar[List["DayType"]] = []
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        # Register the class itself, not instances
+        DayType.instances.append(cls)
 
     def get_name(self):
         return self.day_name
@@ -105,7 +111,10 @@ def build_and_display_nodes(root, skip_on_dirs, skip_on_files):
 
 
 def display_dir(
-    as_display_node: DisplayNode, skip_on_dirs: Set[str], skip_on_files: Set[str], tab: str = "\t"
+    as_display_node: DisplayNode,
+    skip_on_dirs: Set[str],
+    skip_on_files: Set[str],
+    tab: str = "\t",
 ):
     if as_display_node.curr.is_dir():
         print(f"{tab}{as_display_node.curr.name} ---->")

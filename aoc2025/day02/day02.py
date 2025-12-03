@@ -1,11 +1,11 @@
 from typing import List, Tuple, Generator
 import math
 from data_loader import DayType
+from dataclasses import dataclass
 
-
+@dataclass
 class DayTwo(DayType):
-    def __init__(self):
-        self.day_name = "day02"
+    day_name: str = "day02"
 
     def parse_input(self, rows: List[str]) -> Generator[Tuple[int, int]]:
         for row in rows:
