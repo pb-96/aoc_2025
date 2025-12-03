@@ -73,6 +73,3 @@ class DayTwo(DayType):
                 total_count += self.count_window(num)
 
         return total_count
-
-    def both_parts(self, raw_data: List[str]) -> Tuple[int, int]:
-        return self.part_one(raw_data), self.part_two(raw_data)

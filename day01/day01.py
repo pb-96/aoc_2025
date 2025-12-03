@@ -67,6 +67,3 @@ class DayOne(DayType):
             start_point = (start_point + rotate * VALUE_DIR.get(direction)) % 100
 
         return counter
-
-    def both_parts(self, data: List[str]) -> Tuple[int, int]:
-        return self.part_one(data), self.part_two(data)

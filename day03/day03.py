@@ -25,9 +25,9 @@ class DayThree(DayType):
     def distinct_in_order(self, digits: str, k: int = 12) -> int:
         n = len(digits)
         to_remove = n - k
-    
+
         stack = []
-    
+
         for digit in map(int, digits):
             while stack and stack[-1] < digit and to_remove > 0:
                 stack.pop()
@@ -41,10 +41,3 @@ class DayThree(DayType):
         for row in data:
             total += self.distinct_in_order(row)
         return total
-
-    def both_parts(self, data: List[str]) -> Tuple[int, int]:
-        value = self.part_one(data)
-        print(f"Part One => {value}")
-        part_two = self.part_two(data)
-        print(f"Part One => {part_two}")
-        return value, part_two

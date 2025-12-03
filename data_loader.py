@@ -2,6 +2,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import List, Tuple, Set, Callable
 from functools import partial
+from collections import deque
 
 
 @dataclass
@@ -17,8 +18,14 @@ class DayType:
     def part_two(self):
         raise NotImplementedError("Not Implemented")
 
-    def both_parts(self, data: List[str]):
-        raise NotImplementedError("Not Implemented")
+    def both_parts(self, data: List[str]) -> Tuple[int, int]:
+        print(f"day => {self.day_name}")
+        value = self.part_one(data)
+        print(f"Part One => {value}")
+        part_two = self.part_two(data)
+        print(f"Part One => {part_two}")
+        print("*" * 100)
+        return value, part_two
 
 
 def find_data_file(location: Path, day_name: str) -> List[str]:
@@ -32,9 +39,12 @@ def find_data_file(location: Path, day_name: str) -> List[str]:
 
 
 class DisplayNode:
-    def __init__(self, curr: str, children: List[str, "DisplayNode"] = []):
+    def __init__(self, curr: Path, children: List["DisplayNode"] = []):
         self.curr = curr
         self.children = children
+
+    def has_children(self):
+        return len(self.children) > 0
 
     def __repr__(self):
         return f"Root={self.curr}, children={self.children}"
@@ -42,10 +52,13 @@ class DisplayNode:
 
 def build_display_node(root: Path, predicate: Callable[[Path], bool]):
     given_root = DisplayNode(root, children=[])
+
+    if not root.is_dir():
+        return given_root
+
     for child in root.iterdir():
         if child.is_file() and predicate(given_path=child):
-            given_root.children.append(child)
-        # Skips hidden folders
+            given_root.children.append(DisplayNode(curr=child))
         elif child.is_dir() and predicate(given_path=child):
             given_root.children.append(build_display_node(child, predicate))
     return given_root
@@ -82,10 +95,28 @@ def predicate_path(
     return False
 
 
-def display_dir(root: Path, skip_on_dirs: Set[str], skip_on_files: Set[str]):
+def build_and_display_nodes(root, skip_on_dirs, skip_on_files):
     "Utils wrapper to display files and data - helps with Readme's and passing context to an LLM -> this tech exists but wanted to write myself"
     predicate = partial(
         predicate_path, skip_on_dirs=skip_on_dirs, skip_on_files=skip_on_files
     )
     as_display_node = build_display_node(root, predicate)
-    print(as_display_node)
+    display_dir(as_display_node, skip_on_dirs, skip_on_files)
+
+
+def display_dir(
+    as_display_node: DisplayNode, skip_on_dirs: Set[str], skip_on_files: Set[str], tab: str = "\t"
+):
+    if as_display_node.curr.is_dir():
+        print(f"{tab}{as_display_node.curr.name} ---->")
+    else:
+        print(f"{tab}{as_display_node.curr.name}")
+
+    for child in as_display_node.children:
+        if child.has_children():
+            print(f"{tab}-{child.curr.name}/ ---->")
+            tab_copy = tab * 2
+            for inner_child in child.children:
+                display_dir(inner_child, skip_on_dirs, skip_on_files, tab_copy)
+        else:
+            print(f"{tab}{child.curr.name}")
