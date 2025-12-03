@@ -17,8 +17,7 @@ class DayThree(DayType):
             maxes[idx] = 0
 
             for first, it in self.windows_gen(row):
-                l = [*it]
-                as_num = first * 10 + max(l)
+                as_num = first * 10 + max([*it])
                 maxes[idx] = max(maxes[idx], as_num)
 
         return sum(maxes.values())
