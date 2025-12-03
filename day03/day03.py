@@ -34,7 +34,7 @@ class DayThree(DayType):
                 to_remove -= 1
             stack.append(digit)
 
-        return stack[:k]
+        return int("".join(map(str, stack[:k])))
 
     def part_two(self, data: List[str]):
         total = 0
