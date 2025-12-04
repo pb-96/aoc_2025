@@ -19,7 +19,7 @@ VALUE_DIR = {
     Direction.R: 1,
 }
 
-@dataclass
+
 class DayOne(DayType):
     day_name: str = "day01"
 

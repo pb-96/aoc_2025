@@ -3,7 +3,7 @@ import math
 from data_loader import DayType
 from dataclasses import dataclass
 
-@dataclass
+
 class DayTwo(DayType):
     day_name: str = "day02"
 
