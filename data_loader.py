@@ -1,5 +1,5 @@
 from pathlib import Path
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Tuple, Set, Callable, ClassVar
 from functools import partial
 
@@ -7,7 +7,6 @@ from functools import partial
 @dataclass
 class DayType:
     day_name: str
-    instances: List["DayType"] = field(default_factory=list)
     instances: ClassVar[List["DayType"]] = []
 
     def __init_subclass__(cls, **kwargs):
