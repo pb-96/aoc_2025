@@ -28,7 +28,7 @@ class DayType:
         value = self.part_one(data)
         print(f"Part One => {value}")
         part_two = self.part_two(data)
-        print(f"Part One => {part_two}")
+        print(f"Part Two => {part_two}")
         print("*" * 100)
         return value, part_two
 
