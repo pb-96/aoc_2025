@@ -1,5 +1,5 @@
 from data_loader import DayType
-from typing import Tuple, List
+from typing import List
 
 
 class DayThree(DayType):

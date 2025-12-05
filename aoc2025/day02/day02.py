@@ -1,7 +1,6 @@
 from typing import List, Tuple, Generator
 import math
 from data_loader import DayType
-from dataclasses import dataclass
 
 
 class DayTwo(DayType):

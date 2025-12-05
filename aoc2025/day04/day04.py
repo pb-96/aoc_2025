@@ -25,13 +25,13 @@ class DayFour(DayType):
         total_found = 0
 
         for direction in DIRECTIONS:
-            l, r = direction[0] + row, direction[1] + col
-            if l < 0 or l >= len(grid):
+            left, right = direction[0] + row, direction[1] + col
+            if left < 0 or left >= len(grid):
                 continue
-            if r < 0 or r >= len(grid[0]):
+            if right < 0 or right >= len(grid[0]):
                 continue
 
-            char_match = grid[l][r] == "@"
+            char_match = grid[left][right] == "@"
             total_found += char_match
 
         return 1 if total_found < 4 else 0
@@ -59,8 +59,8 @@ class DayFour(DayType):
                             to_swop.append((r_idx, c_idx))
 
             total_count += len(to_swop)
-            for l, r in to_swop:
-                as_matrix[l][r] = "x"
+            for left, right in to_swop:
+                as_matrix[left][right] = "x"
 
             if not len(to_swop):
                 break

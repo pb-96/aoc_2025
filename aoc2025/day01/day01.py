@@ -1,8 +1,7 @@
-from typing import List, Tuple
+from typing import List
 from enum import Enum
 from data_loader import DayType
 from operator import add, sub
-from dataclasses import dataclass
 
 UPPER_LIM = 100
 LOWER_LIM = 0

@@ -7,8 +7,17 @@ from data_loader import (
 from pathlib import Path
 from datetime import datetime
 
-# TODO Make this import dynamic based of the year which is passed in from the user
-from aoc2025 import *
+import importlib
+from typer import Typer
+
+app = Typer()
+
+
+current_time = datetime.now()
+current_year = current_time.year
+string_package_name = f"aoc{current_year}"
+
+importlib.import_module(string_package_name)
 
 ROOT = Path().cwd()
 gitignore_file = ROOT / ".gitignore"
@@ -24,16 +33,16 @@ def init_display_dir():
     build_and_display_nodes(ROOT, skip_dirs, skip_files)
 
 
-if __name__ == "__main__":
+@app.command()
+def main(given_current_year: int | None = None):
+    given_current_year = given_current_year or current_year
     init_display_dir()
-
-    # SO OVER ENGINEERED LOL
-    current_time = datetime.now()
-    current_year = current_time.year
-
     for raw_cls in DayType.instances:
         day: DayType = raw_cls(raw_cls.get_name(raw_cls))
-        # TODO Make this import dynamic based of the year which is passed in from the user
-        location = ROOT / f"aoc{current_year}" / day.get_name()
+        location = ROOT / f"aoc{given_current_year}" / day.get_name()
         data = find_data_file(location, day.get_name())
         day.both_parts(data)
+
+
+if __name__ == "__main__":
+    app()
