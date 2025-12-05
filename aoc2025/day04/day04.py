@@ -17,7 +17,7 @@ class DayFour(DayType):
     day_name = "day04"
 
     def normalize_grid(self, data: List[str]) -> List[List[str]]:
-        grid = [list(string) for  string in data]
+        grid = [list(string) for string in data]
         return grid
 
     def bfs(self, pos: Tuple[int, int], grid: List[List[str]]) -> int:
@@ -57,7 +57,7 @@ class DayFour(DayType):
                         count = self.bfs((r_idx, c_idx), as_matrix)
                         if count:
                             to_swop.append((r_idx, c_idx))
-            
+
             total_count += len(to_swop)
             for l, r in to_swop:
                 as_matrix[l][r] = "x"

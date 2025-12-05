@@ -1,6 +1,7 @@
 from data_loader import DayType
 from typing import Tuple, List
 
+
 class DayThree(DayType):
     day_name: str = "day03"
 

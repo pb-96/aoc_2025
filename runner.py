@@ -25,7 +25,7 @@ def init_display_dir():
 
 
 if __name__ == "__main__":
-    # init_display_dir()
+    init_display_dir()
 
     # SO OVER ENGINEERED LOL
     current_time = datetime.now()
