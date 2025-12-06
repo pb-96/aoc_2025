@@ -6,7 +6,7 @@ from data_loader import (
 )
 from pathlib import Path
 from datetime import datetime
-
+from generate_boiler_plate import generate_boiler_plate_string, generate_init_file_string
 import importlib
 from typer import Typer
 
@@ -23,7 +23,6 @@ ROOT = Path().cwd()
 gitignore_file = ROOT / ".gitignore"
 
 
-# TODO: Make a cli tool and make this configurable to run
 def init_display_dir():
     gitignore_path = ROOT / ".gitignore"
     if not gitignore_path.exists():
@@ -42,6 +41,19 @@ def main(given_current_year: int | None = None):
         location = ROOT / f"aoc{given_current_year}" / day.get_name()
         data = find_data_file(location, day.get_name())
         day.both_parts(data)
+
+
+@app.command()
+def init_day():
+    day_string = f"day{current_time.day:02d}"
+    new = ROOT / f"aoc{current_year}" / day_string
+    new.mkdir(parents=True, exist_ok=True)
+    py_file = new / f"{day_string}.py"
+    py_file.touch()
+    txt_file = new / f"{day_string}.txt"
+    txt_file.touch()
+    py_file.write_text(generate_boiler_plate_string(current_time))
+    (ROOT / f"aoc{current_year}" / "__init__.py").write_text(generate_init_file_string(current_time))
 
 
 if __name__ == "__main__":
