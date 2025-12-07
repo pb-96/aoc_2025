@@ -1,6 +1,6 @@
-
 from data_loader import DayType
 from typing import List
+
 
 class DayFive(DayType):
     day_name: str = "day05"
@@ -10,4 +10,3 @@ class DayFive(DayType):
 
     def part_two(self, data: List[str]):
         return 0
-

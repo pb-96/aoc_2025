@@ -4,13 +4,15 @@ from aoc2025.day03.day03 import DayThree
 from aoc2025.day04.day04 import DayFour
 from aoc2025.day05.day05 import DayFive
 from aoc2025.day06.day06 import DaySix
+from aoc2025.day07.day07 import DaySeven
 
 
 __all__ = [
-	'DayOne',
-	'DayTwo',
-	'DayThree',
-	'DayFour',
-	'DayFive',
-	'DaySix',
+    "DayOne",
+    "DayTwo",
+    "DayThree",
+    "DayFour",
+    "DayFive",
+    "DaySix",
+    "DaySeven",
 ]

@@ -6,7 +6,10 @@ from data_loader import (
 )
 from pathlib import Path
 from datetime import datetime
-from generate_boiler_plate import generate_boiler_plate_string, generate_init_file_string
+from generate_boiler_plate import (
+    generate_boiler_plate_string,
+    generate_init_file_string,
+)
 import importlib
 from typer import Typer
 
@@ -53,7 +56,9 @@ def init_day():
     txt_file = new / f"{day_string}.txt"
     txt_file.touch()
     py_file.write_text(generate_boiler_plate_string(current_time))
-    (ROOT / f"aoc{current_year}" / "__init__.py").write_text(generate_init_file_string(current_time))
+    (ROOT / f"aoc{current_year}" / "__init__.py").write_text(
+        generate_init_file_string(current_time)
+    )
 
 
 if __name__ == "__main__":

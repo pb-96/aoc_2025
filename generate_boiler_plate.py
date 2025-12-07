@@ -58,24 +58,21 @@ def generate_boiler_plate_string(current_date: datetime) -> str:
 
 def generate_init_file_string(current_date: datetime) -> str:
     date_range = range(1, current_date.day + 1)
-    cls_names = [
-        number_to_word(n) for n in date_range
-    ]
+    cls_names = [number_to_word(n) for n in date_range]
     as_cls_names = [f"Day{cls_name}" for cls_name in cls_names]
-    
+
     import_string = ""
 
     for day_int, cls_name in zip(date_range, as_cls_names):
         this_day_string = f"day{day_int:02d}"
         import_string += f"from aoc{current_date.year}.{this_day_string}.{this_day_string} import {cls_name}\n"
-    
+
     import_string += "\n\n"
 
     all_string = "__all__ = [\n"
     for cls_name in as_cls_names:
         all_string += f"\t'{cls_name}',\n"
-    
+
     all_string += "]\n"
-    
 
     return import_string + all_string
