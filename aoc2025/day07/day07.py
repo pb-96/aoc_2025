@@ -2,6 +2,7 @@ from data_loader import DayType
 from collections import defaultdict
 from copy import deepcopy
 
+
 class DaySeven(DayType):
     day_name: str = "day07"
 
