@@ -24,19 +24,13 @@ class DaySix(DayType):
 
     def parse_data_p2(self, data: list[str]):
         *rows, ops_line = data
-        
-        # Find delimiter positions and operators
         delims = [i for i, c in enumerate(ops_line) if c in "*+"]
         ops = [c for c in ops_line if c in "*+"]
-        delims.append(len(ops_line) + 1)  # End marker for last chunk
-
-        # Chunk each row by delimiter positions
+        delims.append(len(ops_line) + 1)
         chunks_by_row = [
             [list(row[start:delims[i + 1] - 1].replace(" ", "0")) for i, start in enumerate(delims[:-1])]
             for row in rows
         ]
-
-        # Transpose: group by column instead of row
         columns = list(zip(*chunks_by_row))
         return zip(columns, ops)
 
@@ -47,7 +41,6 @@ class DaySix(DayType):
     def part_two(self, data: List[str]):
         total = 0
         for cols, op in self.parse_data_p2(data):
-            # Build numbers from digits, reading right-to-left, skipping zeros
             digit_buckets = defaultdict(list)
             for col in cols:
                 for idx in range(len(col) - 1, -1, -1):
