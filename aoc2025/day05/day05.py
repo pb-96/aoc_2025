@@ -31,8 +31,8 @@ class DayFive(DayType):
             if line == "":
                 on_intervals = False
             elif on_intervals:
-                l, r = [*map(int, line.split("-"))]
-                intervals.append((l, r))
+                left, right = [*map(int, line.split("-"))]
+                intervals.append((left, right))
             else:
                 food_ids.append(int(line))
 
@@ -56,5 +56,5 @@ class DayFive(DayType):
         intervals, _ = self.parse_data(data)
         total_ids = 0
         for left, right in intervals:
-            total_ids += (right - left + 1)
+            total_ids += right - left + 1
         return total_ids

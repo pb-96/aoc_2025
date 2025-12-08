@@ -10,7 +10,9 @@ class Coord:
     z: int
 
     def squared_distance_to(self, other: "Coord") -> int:
-        return (self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2
+        return (
+            (self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2
+        )
 
 
 class UnionFind:
@@ -50,10 +52,12 @@ def parse_coords(data: List[str]) -> List[Coord]:
     return [Coord(*map(int, line.split(","))) for line in data]
 
 
-def compute_pairwise_distances(coords: List[Coord]) -> list[tuple[tuple[int, int], int]]:
+def compute_pairwise_distances(
+    coords: List[Coord],
+) -> list[tuple[tuple[int, int], int]]:
     pairs = {}
     for i, coord1 in enumerate(coords):
-        for j, coord2 in enumerate(coords[i + 1:], i + 1):
+        for j, coord2 in enumerate(coords[i + 1 :], i + 1):
             pairs[(i, j)] = coord1.squared_distance_to(coord2)
     return sorted(pairs.items(), key=lambda x: x[1])
 
