@@ -50,6 +50,9 @@ def main(given_current_year: int | None = None):
 def init_day():
     day_string = f"day{current_time.day:02d}"
     new = ROOT / f"aoc{current_year}" / day_string
+    if new.exists():
+        print(f"Day {day_string} already exists")
+        return
     new.mkdir(parents=True, exist_ok=True)
     py_file = new / f"{day_string}.py"
     py_file.touch()

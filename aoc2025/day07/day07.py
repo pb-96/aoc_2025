@@ -1,9 +1,17 @@
 from data_loader import DayType
 from collections import defaultdict
-
+from copy import deepcopy
 
 class DaySeven(DayType):
     day_name: str = "day07"
+
+    def display_grid(self, grid: List[List[str]]) -> None:
+        for row in grid:
+            print("".join(row))
+
+    def draw_line(self, draw_copy, x: int, y: int) -> None:
+        draw_copy[y][x - 1] = "|"
+        draw_copy[y][x + 1] = "|"
 
     def parse_data(self, data):
         _map = []
@@ -19,6 +27,7 @@ class DaySeven(DayType):
 
     def part_one(self, data):
         _map, (y, x) = self.parse_data(data)
+        drawn_copy = deepcopy(data)
 
         beams = {x}
         splitters = 0
@@ -29,14 +38,6 @@ class DaySeven(DayType):
 
             y += 1
             next_beams = set()
-
-            for x in beams:
-                if _map[y][x] == "^":
-                    next_beams.add(x - 1)
-                    next_beams.add(x + 1)
-                    splitters += 1
-                else:
-                    next_beams.add(x)
             beams = next_beams
         return splitters
 
