@@ -45,9 +45,12 @@ class DayNine(DayType):
         points = self.create_points(data)
         raw_coords = [(point.x, point.y) for point in points]
         poly = Polygon(raw_coords)
-        rectangles = [
-            (min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2))
+        candidates = sorted((
+            ((abs(x2-x1)+1) * (abs(y2-y1)+1), min(x1,x2), min(y1,y2), max(x1,x2), max(y1,y2))
             for (x1, y1), (x2, y2) in combinations(raw_coords, 2)
-        ]
-        areas = [(x2 - x1 + 1) * (y2 - y1 + 1) for (x1, y1, x2, y2) in rectangles]
-        return max(compress(areas, map(poly.contains, starmap(box, rectangles))))
+        ), reverse=True)
+        
+        for area, *bounds in candidates:
+            if poly.contains(box(*bounds)):
+                return area
+        return 0
