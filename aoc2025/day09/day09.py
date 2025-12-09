@@ -1,7 +1,7 @@
 from data_loader import DayType
 from typing import List
 from dataclasses import dataclass
-from itertools import combinations, starmap, compress
+from itertools import combinations
 from shapely import Polygon, box
 
 
