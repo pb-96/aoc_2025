@@ -5,7 +5,6 @@ from itertools import combinations, starmap, compress
 from shapely import Polygon, box
 
 
-
 @dataclass
 class Point:
     x: int
@@ -45,11 +44,20 @@ class DayNine(DayType):
         points = self.create_points(data)
         raw_coords = [(point.x, point.y) for point in points]
         poly = Polygon(raw_coords)
-        candidates = sorted((
-            ((abs(x2-x1)+1) * (abs(y2-y1)+1), min(x1,x2), min(y1,y2), max(x1,x2), max(y1,y2))
-            for (x1, y1), (x2, y2) in combinations(raw_coords, 2)
-        ), reverse=True)
-        
+        candidates = sorted(
+            (
+                (
+                    p1.area_to(p2),
+                    min(p1.x, p2.x),
+                    min(p1.y, p2.y),
+                    max(p1.x, p2.x),
+                    max(p1.y, p2.y),
+                )
+                for p1, p2 in combinations(points, 2)
+            ),
+            reverse=True,
+        )
+
         for area, *bounds in candidates:
             if poly.contains(box(*bounds)):
                 return area
