@@ -13,6 +13,7 @@ class Point:
     def area_to(self, other: "Point") -> int:
         return (abs(self.x - other.x) + 1) * (abs(self.y - other.y) + 1)
 
+
 class DayNine(DayType):
     day_name: str = "day09"
     corner_delim = "#"
