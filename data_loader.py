@@ -2,6 +2,8 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import List, Tuple, Set, Callable, ClassVar
 from functools import partial
+from datetime import datetime
+import requests
 
 
 @dataclass
@@ -128,3 +130,21 @@ def display_dir(
                 display_dir(inner_child, skip_on_dirs, skip_on_files, tab_copy)
         else:
             print(f"{tab}{child.curr.name}")
+
+
+def scrape_input_data(
+    current_time: datetime,
+    dest_path: Path,
+    base_url_template: str = "https://adventofcode.com/{year}/day/{day}/input",
+) -> bool:
+    day, year = current_time.day, current_time.year
+    full_string = base_url_template.format(year=year, day=day)
+    try:
+        response = requests.get(full_string)
+        response.raise_for_status()
+        raw_data = response.text.splitlines()
+        dest_path.write_text("\n".join(raw_data))
+        return True
+    except requests.exceptions.RequestException as e:
+        print(f"Error scraping input data: {e}")
+        return False

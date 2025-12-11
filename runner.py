@@ -3,6 +3,7 @@ from data_loader import (
     DayType,
     parse_gitignore_file,
     build_and_display_nodes,
+    scrape_input_data,
 )
 from pathlib import Path
 from datetime import datetime
@@ -62,6 +63,7 @@ def init_day():
     (ROOT / f"aoc{current_year}" / "__init__.py").write_text(
         generate_init_file_string(current_time)
     )
+    scrape_input_data(current_time, txt_file)
 
 
 if __name__ == "__main__":
