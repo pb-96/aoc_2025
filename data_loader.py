@@ -5,6 +5,7 @@ from functools import partial
 from datetime import datetime
 import requests
 
+BASE_URL_TEMPLATE: str = "https://adventofcode.com/{year}/day/{day}/input",
 
 @dataclass
 class DayType:
@@ -134,11 +135,10 @@ def display_dir(
 
 def scrape_input_data(
     current_time: datetime,
-    dest_path: Path,
-    base_url_template: str = "https://adventofcode.com/{year}/day/{day}/input",
+    dest_path: Path
 ) -> bool:
     day, year = current_time.day, current_time.year
-    full_string = base_url_template.format(year=year, day=day)
+    full_string = BASE_URL_TEMPLATE.format(year=year, day=day)
     try:
         response = requests.get(full_string)
         response.raise_for_status()
