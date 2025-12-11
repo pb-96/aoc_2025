@@ -1,6 +1,5 @@
 from functools import cache
 from typing import Dict, FrozenSet, List, Tuple
-
 from data_loader import DayType
 
 

@@ -1,7 +1,5 @@
 from typing import List
-
 from z3 import z3
-
 from data_loader import DayType
 
 
