@@ -1,6 +1,8 @@
 from data_loader import DayType
 from collections import defaultdict
-from copy import deepcopy
+
+# from copy import deepcopy
+from typing import List
 
 
 class DaySeven(DayType):
@@ -28,9 +30,9 @@ class DaySeven(DayType):
 
     def part_one(self, data):
         _map, (y, x) = self.parse_data(data)
-        drawn_copy = deepcopy(data)
+        # drawn_copy = deepcopy(data)
 
-        beams = {x}
+        # beams = {x}
         splitters = 0
 
         while True:
@@ -38,8 +40,8 @@ class DaySeven(DayType):
                 break
 
             y += 1
-            next_beams = set()
-            beams = next_beams
+            # next_beams = set()
+            # beams = next_beams
         return splitters
 
     def part_two(self, data):
