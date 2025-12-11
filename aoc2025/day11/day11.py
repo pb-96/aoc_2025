@@ -24,7 +24,7 @@ class DayEleven(DayType):
         return rec_p_two("svr", False, False, self)
 
     def __hash__(self):
-        return hash(self.day_name)
+        return hash(f"{self.day_name}_at_{id(self)}")
 
 
 @cache
