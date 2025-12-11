@@ -42,7 +42,10 @@ def rec_p_two(x: str, seen_dac: bool, seen_fft: bool, cls: DayEleven) -> int:
     else:
         ans = 0
         for y in cls.E[x]:
-            dac = seen_dac or y == "dac"
-            fit = seen_fft or y == "fft"
-            ans += rec_p_two(y, dac, fit, cls)
+            ans += rec_p_two(
+                y,
+                seen_dac=seen_dac or y == "dac",
+                seen_fft=seen_fft or y == "fft",
+                cls=cls,
+            )
         return ans
