@@ -1,51 +1,47 @@
-from data_loader import DayType
-from typing import List
 from functools import cache
+from typing import Dict, FrozenSet, List, Tuple
+
+from data_loader import DayType
+
+
+def parse_graph(data: List[str]) -> Dict[str, Tuple[str, ...]]:
+    graph = {}
+    for line in data:
+        node, neighbors = line.split(":")
+        graph[node] = tuple(neighbors.split())
+    return graph
+
+
+def count_paths(graph: Dict[str, Tuple[str, ...]]) -> int:
+    @cache
+    def dfs(node: str) -> int:
+        if node == "out":
+            return 1
+        return sum(dfs(neighbor) for neighbor in graph[node])
+
+    return dfs("you")
+
+
+def count_paths_through_nodes(
+    graph: Dict[str, Tuple[str, ...]], required_nodes: FrozenSet[str]
+) -> int:
+    @cache
+    def dfs(node: str, seen: FrozenSet[str]) -> int:
+        if node == "out":
+            return 1 if required_nodes <= seen else 0
+        new_seen = seen | ({node} & required_nodes)
+        return sum(dfs(neighbor, new_seen) for neighbor in graph[node])
+
+    return dfs("svr", frozenset())
 
 
 class DayEleven(DayType):
     day_name: str = "day11"
 
-    def parse_data(self, data: List[str]):
-        E = {}
-        for line in data:
-            x, ys = line.split(":")
-            ys = ys.split()
-            E[x] = ys
-        self.E = E
-        return E
+    def part_one(self, data: List[str]) -> int:
+        graph = parse_graph(data)
+        return count_paths(graph)
 
-    def part_one(self, data: List[str]):
-        self.parse_data(data)
-        return rec_p_one("you", self)
-
-    def part_two(self, data: List[str]):
-        self.parse_data(data)
-        return rec_p_two("svr", False, False, self)
-
-    def __hash__(self):
-        return hash(f"{self.day_name}_at_{id(self)}")
-
-
-@cache
-def rec_p_one(x: str, cls: DayEleven) -> int:
-    if x == "out":
-        return 1
-    else:
-        return sum(rec_p_one(y, cls) for y in cls.E[x])
-
-
-@cache
-def rec_p_two(x: str, seen_dac: bool, seen_fft: bool, cls: DayEleven) -> int:
-    if x == "out":
-        return 1 if seen_dac and seen_fft else 0
-    else:
-        ans = 0
-        for y in cls.E[x]:
-            ans += rec_p_two(
-                y,
-                seen_dac=seen_dac or y == "dac",
-                seen_fft=seen_fft or y == "fft",
-                cls=cls,
-            )
-        return ans
+    def part_two(self, data: List[str]) -> int:
+        graph = parse_graph(data)
+        return count_paths_through_nodes(graph, frozenset({"dac", "fft"}))
