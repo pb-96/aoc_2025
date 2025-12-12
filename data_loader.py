@@ -5,7 +5,7 @@ from functools import partial
 from datetime import datetime
 import requests
 
-BASE_URL_TEMPLATE: str = "https://adventofcode.com/{year}/day/{day}/input",
+BASE_URL_TEMPLATE: str = "https://adventofcode.com/{year}/day/{day}/input"
 
 @dataclass
 class DayType:

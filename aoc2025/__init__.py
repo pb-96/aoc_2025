@@ -9,18 +9,20 @@ from aoc2025.day08.day08 import DayEight
 from aoc2025.day09.day09 import DayNine
 from aoc2025.day10.day10 import DayTen
 from aoc2025.day11.day11 import DayEleven
+from aoc2025.day12.day12 import DayTwelve
 
 
 __all__ = [
-    "DayOne",
-    "DayTwo",
-    "DayThree",
-    "DayFour",
-    "DayFive",
-    "DaySix",
-    "DaySeven",
-    "DayEight",
-    "DayNine",
-    "DayTen",
-    "DayEleven",
+	'DayOne',
+	'DayTwo',
+	'DayThree',
+	'DayFour',
+	'DayFive',
+	'DaySix',
+	'DaySeven',
+	'DayEight',
+	'DayNine',
+	'DayTen',
+	'DayEleven',
+	'DayTwelve',
 ]
