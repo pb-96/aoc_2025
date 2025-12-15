@@ -1,8 +1,6 @@
 from data_loader import DayType
+from typing import List, Tuple
 from collections import defaultdict
-
-# from copy import deepcopy
-from typing import List
 
 
 class DaySeven(DayType):
@@ -12,27 +10,32 @@ class DaySeven(DayType):
         for row in grid:
             print("".join(row))
 
-    def draw_line(self, draw_copy, x: int, y: int) -> None:
+    def draw_line(
+        self, draw_copy, y: int, x: int
+    ) -> Tuple[Tuple[int, int], Tuple[int, int]]:
         draw_copy[y][x - 1] = "|"
         draw_copy[y][x + 1] = "|"
+        return (y, x - 1), (y, x + 1)
 
     def parse_data(self, data):
         _map = []
-        st = None
-        for y, line in enumerate(data):
-            row = list(line)
-            if y == 0 and st is None:
-                for x, c in enumerate(row):
-                    if c == "S":
-                        st = (y, x)
-            _map.append(row)
-        return _map, st
+        for line in data:
+            _map.append(list(line))
+        return _map
+
+    def locate_start(self, _map):
+        for y, row in enumerate(_map):
+            for x, cell in enumerate(row):
+                if cell == "S":
+                    return y, x
+        return None
 
     def part_one(self, data):
-        _map, (y, x) = self.parse_data(data)
-        # drawn_copy = deepcopy(data)
-
-        # beams = {x}
+        st = self.locate_start(data)
+        assert st is not None, "Start not found"
+        y,x = st
+        _map = self.parse_data(data)
+        beams = {x}
         splitters = 0
 
         while True:
@@ -40,12 +43,23 @@ class DaySeven(DayType):
                 break
 
             y += 1
-            # next_beams = set()
-            # beams = next_beams
+            next_beams = set()
+
+            for x in beams:
+                if _map[y][x] == "^":
+                    next_beams.add(x - 1)
+                    next_beams.add(x + 1)
+                    splitters += 1
+                else:
+                    next_beams.add(x)
+            beams = next_beams
         return splitters
 
     def part_two(self, data):
-        _map, (y, x) = self.parse_data(data)
+        st = self.locate_start(data)
+        assert st is not None, "Start not found"
+        y,x = st
+        _map = self.parse_data(data)
 
         beams = defaultdict(int)
         beams[x] = 1

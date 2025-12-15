@@ -3,7 +3,6 @@ from data_loader import (
     DayType,
     parse_gitignore_file,
     build_and_display_nodes,
-    scrape_input_data,
 )
 from pathlib import Path
 from datetime import datetime
@@ -13,6 +12,9 @@ from generate_boiler_plate import (
 )
 import importlib
 from typer import Typer
+import re
+
+DAY_PATTERN = re.compile(r"day(\d{2})")
 
 app = Typer()
 
@@ -37,11 +39,22 @@ def init_display_dir():
 
 
 @app.command()
-def main(given_current_year: int | None = None):
+def main(given_current_year: int | None = None, given_day: str | None = None):
+    if given_day is None:
+        given_day == "all"
+    else:
+        assert DAY_PATTERN.match(given_day), "Invalid day format"
+
     given_current_year = given_current_year or current_year
     init_display_dir()
     for raw_cls in DayType.instances:
+        if given_day != "all" and given_day != raw_cls.get_name(raw_cls):
+            continue
+
         day: DayType = raw_cls(raw_cls.get_name(raw_cls))
+        assert DAY_PATTERN.match(given_day), (
+            f"Invalid day format: {given_day} for {raw_cls}"
+        )
         location = ROOT / f"aoc{given_current_year}" / day.get_name()
         data = find_data_file(location, day.get_name())
         day.both_parts(data)
@@ -63,7 +76,6 @@ def init_day():
     (ROOT / f"aoc{current_year}" / "__init__.py").write_text(
         generate_init_file_string(current_time)
     )
-    scrape_input_data(current_time, txt_file)
 
 
 if __name__ == "__main__":

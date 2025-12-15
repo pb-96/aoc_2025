@@ -43,7 +43,9 @@ def parse_region(line: str) -> Tuple[int, List[int]]:
     return grid_size, present_counts
 
 
-def calculate_total_present_size(present_counts: List[int], sizes: Dict[int, int]) -> int:
+def calculate_total_present_size(
+    present_counts: List[int], sizes: Dict[int, int]
+) -> int:
     return sum(count * sizes[i] for i, count in enumerate(present_counts))
 
 
@@ -69,4 +71,3 @@ class DayTwelve(DayType):
 
     def part_two(self, data: List[str]) -> int:
         return 0
-

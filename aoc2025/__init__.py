@@ -13,16 +13,16 @@ from aoc2025.day12.day12 import DayTwelve
 
 
 __all__ = [
-	'DayOne',
-	'DayTwo',
-	'DayThree',
-	'DayFour',
-	'DayFive',
-	'DaySix',
-	'DaySeven',
-	'DayEight',
-	'DayNine',
-	'DayTen',
-	'DayEleven',
-	'DayTwelve',
+    "DayOne",
+    "DayTwo",
+    "DayThree",
+    "DayFour",
+    "DayFive",
+    "DaySix",
+    "DaySeven",
+    "DayEight",
+    "DayNine",
+    "DayTen",
+    "DayEleven",
+    "DayTwelve",
 ]

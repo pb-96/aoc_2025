@@ -7,6 +7,7 @@ import requests
 
 BASE_URL_TEMPLATE: str = "https://adventofcode.com/{year}/day/{day}/input"
 
+
 @dataclass
 class DayType:
     day_name: str
@@ -34,6 +35,9 @@ class DayType:
         print(f"Part Two => {part_two}")
         print("*" * 100)
         return value, part_two
+
+    def __repr__(self):
+        return f"DayType(day_name={self.day_name})"
 
 
 def find_data_file(location: Path, day_name: str) -> List[str]:
@@ -133,10 +137,7 @@ def display_dir(
             print(f"{tab}{child.curr.name}")
 
 
-def scrape_input_data(
-    current_time: datetime,
-    dest_path: Path
-) -> bool:
+def scrape_input_data(current_time: datetime, dest_path: Path) -> bool:
     day, year = current_time.day, current_time.year
     full_string = BASE_URL_TEMPLATE.format(year=year, day=day)
     try:
